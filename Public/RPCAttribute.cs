@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Threading.Tasks;
 
 namespace mRPC
 {
@@ -6,8 +9,11 @@ namespace mRPC
     /// Remote procedure call marker.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = false)]
-    public class RPCAttribute : Attribute
+    public class RPCAttribute : ActionFilterAttribute
     {
-
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            context.Result = new NotFoundResult();
+        }
     }
 }

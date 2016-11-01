@@ -36,8 +36,10 @@ namespace mRPC
             message.Add("Intent", "Call");
             message.Add("Controller", _controller);
             message.Add("Action", binder.Name);
+            var parameters = JToken.FromObject(args);
+            message.Add("Parameters", parameters);
             var tasks = new List<Task>();
-            foreach (IRPCConnection client in _manager.Clients)
+            foreach (IRPCConnection client in _manager.Connections)
             {
                 tasks.Add(
                     client.Connection.Send(message)

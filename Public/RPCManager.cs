@@ -48,7 +48,7 @@ namespace mRPC
             DynamicRPC = new DynamicMultiRouter<T>(this);
         }
 
-        public IEnumerable<RPCConnection<T>> Clients
+        public IEnumerable<RPCConnection<T>> Connections
         {
             get
             {

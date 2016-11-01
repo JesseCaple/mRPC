@@ -2,25 +2,19 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Personal\Code\mRPC\Internal\Authorizations.cs</string>
+      <string>c:\personal\code\mrpc\internal\authorizations.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Personal\Code\mRPC\Internal\Reflections.cs</string>
+      <string>c:\personal\code\mrpc\internal\reflections.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Personal\Code\mRPC\Internal\DynamicMultiRouter.cs</string>
+      <string>c:\personal\code\mrpc\internal\dynamicmultirouter.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Personal\Code\mRPC\Internal\DynamicRouter.cs</string>
+      <string>c:\personal\code\mrpc\internal\dynamicrouter.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Personal\Code\mRPC\Public\RPCServer.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Personal\Code\mRPC\Public\CallResult.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>mRPC</string>
+      <string>c:\personal\code\mrpc\public\rpcserver.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

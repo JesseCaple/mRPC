@@ -48,8 +48,7 @@ namespace mRPC
                 await UpgradeAsync(connection);
                 while (!connection.Closed)
                 {
-                    var message = await connection.Receive();
-                    await HandleMessageAsync(connection, message);
+                    await HandleMessageAsync(connection);
                 }
             }
             catch (Exception ex)
@@ -72,18 +71,17 @@ namespace mRPC
                     manager.Upgrade(connection);
                 }
             }
-            var result = new JObject();
-            result.Add("Intent", "Hello");
+            var readyMessage = new JObject();
             var controllers =
                 from manager in _managers.Values
                 select manager.Name;
-            result.Add("Controllers", JToken.FromObject(controllers));
+            readyMessage.Add("Controllers", JToken.FromObject(controllers));
             var routes =
                 from manager in _managers.Values
                 from action in manager.Actions
                 select new { Controller = manager.Name, Action = action.Key };
-            result.Add("Routes", JToken.FromObject(routes));
-            await connection.Send(result);
+            readyMessage.Add("Routes", JToken.FromObject(routes));
+            await connection.Send(readyMessage);
         }
 
         // unregister connection with registered RPC managers
@@ -97,10 +95,11 @@ namespace mRPC
         }
 
         // route a remote call to the appropriate action
-        private async Task HandleMessageAsync(
-            IConnection connection,
-            JObject message)
+        private async Task HandleMessageAsync(IConnection connection)
         {
+            // get next message
+            var message = await connection.Receive();
+
             // extract controller name and action name from message
             var controllerName = message.Value<string>("Controller");
             var actionName = message.Value<string>("Action");
@@ -162,23 +161,14 @@ namespace mRPC
                 return;
             }
 
-            // call the action and send back result
+            // call the action
             try
             {
-                var reply = new JObject();
-                reply.Add("Intent", "Result");
-                reply.Add("ID", message.GetValue("ID"));
-                var returned = actionMethod.Invoke(controller, parameters);
-                if (returned != null)
-                {
-                    var returnValue = JToken.FromObject(returned);
-                    reply.Add("Value", returnValue);
-                }
-                await connection.Send(reply);
+                actionMethod.Invoke(controller, parameters);
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"RPC Connection failed call to {controllerName}.{actionName}, because of exception: {ex.Message}");
+                _logger.LogError($"RPC Connection failed call to {controllerName}.{actionName}, because of exception: {ex.Message}");
                 return;
             }
             finally
