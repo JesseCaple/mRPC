@@ -102,13 +102,9 @@ namespace mRPC
             JObject message)
         {
             // extract controller name and action name from message
-            string controllerName, actionName;
-            try
-            {
-                controllerName = message.Value<string>("Controller");
-                actionName = message.Value<string>("Action");
-            }
-            catch
+            var controllerName = message.Value<string>("Controller");
+            var actionName = message.Value<string>("Action");
+            if (controllerName == null || actionName == null)
             {
                 _logger.LogWarning("RPC call failed because of malformed message");
                 return;

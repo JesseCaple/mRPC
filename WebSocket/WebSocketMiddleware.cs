@@ -45,7 +45,7 @@ namespace mRPC
         {
             // see if we want to handle this request
             if (!context.WebSockets.IsWebSocketRequest
-                || context.Request.Path != "/rpc/")
+                || context.Request.Path != "/mRPC/")
             {
                 await _next.Invoke(context);
                 return;
